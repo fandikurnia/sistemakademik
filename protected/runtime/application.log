@@ -1,0 +1,8 @@
+2014/10/12 05:27:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "gii".' in /var/www/html/akad/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/akad/framework/web/CWebApplication.php(141): CWebApplication->runController('gii')
+#1 /var/www/html/akad/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /var/www/html/akad/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/akad/index.php?r=gii
+---

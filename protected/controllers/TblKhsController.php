@@ -26,6 +26,7 @@ class TblKhsController extends Controller
 	 */
 	public function accessRules()
 	{
+            
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
@@ -39,6 +40,12 @@ class TblKhsController extends Controller
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
+                    /*    
+                        array('allow',
+                                'actions'=>array('admin','view','khs'),
+                                'user'=>array('admin'),
+                        ),
+                    */
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -150,8 +157,34 @@ class TblKhsController extends Controller
 			'model'=>$model,
 		));
 	}
+        
+        
+        public function actionKhs($id)
+        {
+            $nim = $this->loadNim($id);
+            
+            $model = new TblKhs;
+            $model->unsetAttributes(); //clear any default values 
+                if(isset($_GET['TblKhs']))
+                    $model->attributes=$_GET['TblKhs'];
+                
+                $this->render('khs', array(
+                    'model'=>$model,'nim'=>$nim,));
+        }
+        
+        public function loadNim($id)
+        {
+            $model=  TblKhs::model()->find(array(
+                'condition'=>'mahasiswa_id=:mhs',
+                'params'=>array(':mhs'=>$id),));
+            
+            if($model===null)
+                throw new CHttpException(404, 
+                        'The requested page doest not exist.');
+            return $model;
+        }
 
-	/**
+        /**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
